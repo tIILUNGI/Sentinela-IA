@@ -87,12 +87,28 @@ Registo estruturado de incidentes, filtros em tempo real (`pesquisa`, `estado`, 
 ![SENTINELA AI Incidentes](docs/screenshots/incidents.png)
 
 ### 3.5 Inteligência de Risco e Matriz 5x5 (`/app/risks`)
-**Matriz de Risco 5x5** interativa (`Probabilidade 5..1` x `Impacto 1..5`) exibindo a contagem real de avaliações por célula, zonas de criticidade por cor, seleção direta por clique na matriz e cálculo determinístico de 5 fatores.
+**Matriz de Risco 5x5** interativa (`Probabilidade 5..1` x `Impacto 1..5`) posicionada lado a lado com a lista filtrada de riscos, zonas de criticidade por cor, seleção direta por clique na matriz e cálculo determinístico de 5 fatores.
 
 ![SENTINELA AI Matriz de Risco 5x5](docs/screenshots/risks-matrix.png)
 
-### 3.6 Perfil e Segurança (`/app/profile`)
-Banner executivo de perfil com avatar de iniciais, badges de estado e cargo RBAC, edição de identidade pessoal (`PATCH /auth/me`), alteração de palavra-passe com indicador de força (`POST /auth/change-password`), pills de permissões RBAC da organização e encerramento de sessão seguro.
+### 3.6 Inteligência Documental, Evidências, Recomendações, Tarefas e Auditoria
+- **Documentos (`/app/documents`)**: Ingestão de PDF/DOCX/TXT com integridade `SHA-256`, polling automático e Q&A com citações.
+- **Evidências e Correlação (`/app/evidence`)**: Cofre de evidências associado a incidentes reais com sugestões de correlação cruzada.
+- **Recomendações (`/app/recommendations`)**: Fluxo humano de aprovação/rejeição com notas de revisão e filtro por estado.
+- **Tarefas (`/app/tasks`) e Auditoria (`/app/audit`)**: Gestão de tarefas de resolução e registos de auditoria filtráveis.
+
+![SENTINELA AI Documentos](docs/screenshots/documents.png)
+
+![SENTINELA AI Evidências](docs/screenshots/evidence.png)
+
+![SENTINELA AI Recomendações](docs/screenshots/recommendations.png)
+
+![SENTINELA AI Tarefas](docs/screenshots/tasks.png)
+
+![SENTINELA AI Auditoria](docs/screenshots/audit.png)
+
+### 3.7 Perfil e Segurança (`/app/profile`)
+Banner executivo centralizado com avatar de iniciais, badges de estado e cargo RBAC, edição de identidade pessoal (`PATCH /auth/me`), alteração de palavra-passe com indicador de força (`POST /auth/change-password`), pills de permissões RBAC da organização e encerramento de sessão seguro.
 
 ![SENTINELA AI Perfil](docs/screenshots/profile.png)
 

@@ -87,12 +87,28 @@ Structured incident intake form, real-time filtering (`search`, `status`, `sever
 ![SENTINELA AI Incidents](docs/screenshots/incidents.png)
 
 ### 3.5 Risk Intelligence & 5x5 Matrix (`/app/risks`)
-Interactive **5x5 Risk Matrix** (`Probability 5..1` x `Impact 1..5`) displaying live assessment counts per cell, color-coded severity zones, click-to-select matrix coordinates, and deterministic 5-factor scoring.
+Interactive **5x5 Risk Matrix** (`Probability 5..1` x `Impact 1..5`) positioned side by side with filtered risk assessments, color-coded severity zones, click-to-select matrix coordinates, and deterministic 5-factor scoring.
 
 ![SENTINELA AI 5x5 Risk Matrix](docs/screenshots/risks-matrix.png)
 
-### 3.6 Profile & Security (`/app/profile`)
-Executive profile banner with initials avatar, role/status badges, personal identity editor (`PATCH /auth/me`), password updater with strength meter (`POST /auth/change-password`), active organization RBAC permission pills, and secure session termination.
+### 3.6 Document Intelligence, Evidence, Recommendations, Tasks & Audit
+- **Documents (`/app/documents`)**: PDF/DOCX/TXT ingestion with `SHA-256` verification, automatic polling, and cited RAG Q&A.
+- **Evidence & Correlation (`/app/evidence`)**: Evidence vault linked to real incidents with cross-incident correlation suggestions.
+- **Recommendations (`/app/recommendations`)**: Human approve/reject workflow with review notes and status filtering.
+- **Tasks (`/app/tasks`) & Audit (`/app/audit`)**: Actionable remediation tasks and filterable audit logs.
+
+![SENTINELA AI Documents](docs/screenshots/documents.png)
+
+![SENTINELA AI Evidence Vault](docs/screenshots/evidence.png)
+
+![SENTINELA AI Recommendations](docs/screenshots/recommendations.png)
+
+![SENTINELA AI Tasks](docs/screenshots/tasks.png)
+
+![SENTINELA AI Audit Trail](docs/screenshots/audit.png)
+
+### 3.7 Profile & Security (`/app/profile`)
+Centered executive profile banner with initials avatar, role/status badges, personal identity editor (`PATCH /auth/me`), password updater with strength meter (`POST /auth/change-password`), active organization RBAC permission pills, and secure session termination.
 
 ![SENTINELA AI Profile](docs/screenshots/profile.png)
 
