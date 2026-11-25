@@ -67,12 +67,14 @@ flowchart LR
 ### 3.1 Landing Page (`/`)
 Obsidian dark aesthetic (`#050607`), animated brand emblem, bilingual switcher (`EN / PT`), capability strip, 4-stage workflow (`Ingest -> Extract -> Analyze -> Decide`), 10-module overview, security guarantees, and FAQ.
 
-![SENTINELA AI Landing Page](docs/screenshots/landing.png)
+![SENTINELA AI Landing Page](docs/screenshots/landing.jpg)
+
+![SENTINELA AI Ten Operational Modules](docs/screenshots/modules.jpg)
 
 ### 3.2 Authentication Shell (`/login`, `/register`, `/forgot-password`, `/reset-password`)
 Split-panel obsidian glassmorphism layout with password visibility toggle, form validation, subtle one-click `Demo` autofill button, and full bilingual support.
 
-![SENTINELA AI Login](docs/screenshots/login.png)
+![SENTINELA AI Login](docs/screenshots/login.jpg)
 
 ### 3.3 Command Center (`/app`)
 Static obsidian sidebar (`lg:sticky lg:top-0 lg:h-screen`), organization and role context header (`Espaço de Trabalho / Sentinela Global Ops · Super Admin`), 8 executive KPI cards, 3 interactive charts (7-day trend, severity, status), recent activity feed, and one-click authenticated CSV exports.
