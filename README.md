@@ -1,11 +1,11 @@
-<div align="center">
+﻿<div align="center">
 
 # SENTINELA AI
 
 **From Evidence to Intelligence.**
 
 [![Language: English](https://img.shields.io/badge/Language-English-1d63ed?style=for-the-badge)](README.md)
-[![Idioma: Português](https://img.shields.io/badge/Idioma-Portugu%C3%AAs-0a1220?style=for-the-badge)](README.pt.md)
+[![Idioma: PortuguÃªs](https://img.shields.io/badge/Idioma-Portugu%C3%AAs-0a1220?style=for-the-badge)](README.pt.md)
 
 **Technical Dossier & Operational Intelligence Platform Specification**
 
@@ -29,10 +29,26 @@
 
 ## 1. Problem Statement & Alignment
 
-Organizations operating in high-accountability environments (public administration, corporate security, compliance, and critical infrastructure) face three recurring operational bottlenecks:
+### The Problem
+Organizations in high-accountability environments (public administration, corporate security, compliance, critical infrastructure) struggle with: **fragmented records** scattered across tools; **opaque AI outputs** that fabricate scores or hide evidence; and **weak auditability** where decisions lack human review and traceable logs.
 
-| Operational Challenge | SENTINELA AI Engineering Solution |
-| :--- | :--- |
+### How SENTINELA AI Solves It
+
+| Operational Challenge | SENTINELA AI Solution | Where in the system |
+| :--- | :--- | :--- |
+| **Fragmented records** across disconnected tools | Unified multi-tenant workspace linking incidents, documents, evidence, risk assessments, recommendations, tasks, and audit logs. | /app Command Center, all 10 modules, X-Organization-ID scoped API |
+| **Opaque/unverifiable AI outputs** | Evidence-bound document Q&A with citations (page_number, chunk_index, score, excerpt), explicit AI unavailable state (never fabricated), and deterministic risk scoring (0–100). | /app/documents Q&A, POST /documents/{id}/questions, POST /risks/assess |
+| **Weak auditability / unreviewed decisions** | Mandatory human-in-the-loop approve/reject for recommendations, RBAC per organization, automatic audit trail for every relevant action, CSV exports. | /app/recommendations, /app/audit, /reports/*.csv, RBAC deps |
+
+### Measurable Alignment
+- **Evidence traceability**: every document answer includes citations with page, chunk, score and excerpt.
+- **No fabricated AI**: when AI provider is unavailable, the system returns explicit unavailable status + retrieved references, never invented text.
+- **Deterministic risk**: score = round((0.25P + 0.30I + 0.15E + 0.15U + 0.15Q)/5*100); equires_human_review = true when evidence quality ≤ 2 or level is high/critical.
+- **Human oversight**: recommendations require approve/reject with review notes; all actions logged in audit trail.
+- **Bilingual & accessible**: full EN/PT, skip link, focus-visible, ARIA, semantic landmarks.
+- **Security**: JWT access+refresh, RBAC, org isolation, security headers, auth rate limiting, CSV injection defense, password reset tokens hashed/single-use/expiring.
+
+--- | :--- |
 | **Fragmented records** across disconnected tools | Unified multi-tenant workspace linking incidents, documents, evidence, risk assessments, recommendations, tasks, and audit logs. |
 | **Opaque AI outputs** with fabricated scores | Evidence-bound RAG citations (`page_number`, `chunk_index`, `score`), explicit AI unavailability states, and deterministic risk scoring (`0-100`). |
 | **Weak auditability** and unreviewed actions | Mandatory human-in-the-loop approval for recommendations, RBAC enforcement per organization, and automatic audit trail logging. |
@@ -77,7 +93,7 @@ Split-panel obsidian glassmorphism layout with password visibility toggle, form 
 ![SENTINELA AI Login](docs/screenshots/login.jpg)
 
 ### 3.3 Command Center (`/app`)
-Static obsidian sidebar (`lg:sticky lg:top-0 lg:h-screen`), organization and role context header (`Espaço de Trabalho / Sentinela Global Ops · Super Admin`), 8 executive KPI cards, 3 interactive charts (7-day trend, severity, status), recent activity feed, and one-click authenticated CSV exports.
+Static obsidian sidebar (`lg:sticky lg:top-0 lg:h-screen`), organization and role context header (`EspaÃ§o de Trabalho / Sentinela Global Ops Â· Super Admin`), 8 executive KPI cards, 3 interactive charts (7-day trend, severity, status), recent activity feed, and one-click authenticated CSV exports.
 
 ![SENTINELA AI Command Center](docs/screenshots/dashboard.png)
 
@@ -214,3 +230,4 @@ npm run lint
 npm run build
 npm run dev
 ```
+
