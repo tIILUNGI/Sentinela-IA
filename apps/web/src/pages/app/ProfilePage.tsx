@@ -81,7 +81,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="space-y-6 max-w-5xl">
+    <div className="mx-auto space-y-6 max-w-5xl">
       {/* Executive Profile Banner */}
       <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-[#050607] via-[#0b1324] to-[#10203b] p-6 sm:p-8 text-white shadow-lg">
         <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-sky-500/15 blur-3xl" />
