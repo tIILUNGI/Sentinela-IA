@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, Navigate, useNavigate } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import { ArrowRight, Eye, EyeOff, Lock, Mail, User, Building2, ShieldCheck } from 'lucide-react'
 import { useAuth } from '@/lib/auth'
 import { useI18n } from '@/lib/i18n'
@@ -11,7 +11,6 @@ type Mode = 'signin' | 'signup'
 export default function AuthPage({ mode }: { mode: Mode }) {
   const { user, login, register } = useAuth()
   const { t, translateError } = useI18n()
-  const nav = useNavigate()
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
