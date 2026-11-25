@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { ArrowLeft, ArrowRight, CheckCircle2, Eye, EyeOff, KeyRound, Lock } from 'lucide-react'
 import { api } from '@/lib/api'
@@ -68,15 +68,15 @@ export default function ResetPasswordPage() {
                 required
                 minLength={8}
                 autoComplete="new-password"
-                placeholder="••••••••••"
+                placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
                 className="pl-10 pr-11"
               />
-              <Lock size={15} className="pointer-events-none absolute bottom-[15px] left-3.5 text-slate-500" />
+              <Lock size={15} className="pointer-events-none absolute bottom-[15px] left-3.5 text-slate-400" />
               <button
                 type="button"
                 onClick={() => setShow(v => !v)}
                 aria-label={show ? t('auth.hidePassword') : t('auth.showPassword')}
-                className="absolute bottom-[10px] right-2.5 rounded-md p-1.5 text-slate-500 transition hover:text-white"
+                className="absolute bottom-[10px] right-2.5 rounded-md p-1.5 text-slate-400 transition hover:text-white"
               >
                 {show ? <EyeOff size={15} /> : <Eye size={15} />}
               </button>
@@ -90,10 +90,10 @@ export default function ResetPasswordPage() {
               required
               minLength={8}
               autoComplete="new-password"
-              placeholder="••••••••••"
+              placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
             />
 
-            <p className="text-[11px] leading-relaxed text-slate-500">{t('auth.reset.hint')}</p>
+            <p className="text-[11px] leading-relaxed text-slate-400">{t('auth.reset.hint')}</p>
 
             {error && <AuthNotice>{error}</AuthNotice>}
 
@@ -130,3 +130,4 @@ export default function ResetPasswordPage() {
     </AuthShell>
   )
 }
+

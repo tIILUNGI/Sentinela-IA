@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+﻿import { Link } from 'react-router-dom'
 import { ArrowLeft, ArrowRight, ShieldCheck, Sparkles } from 'lucide-react'
 import { Logo } from '@/components/brand/Logo'
 import { LanguageSwitcher } from '@/components/LanguageSwitcher'
@@ -123,7 +123,7 @@ export function AuthShell({ children, headline, subtitle }: Props) {
                   </Link>
                 </div>
 
-                <div className="relative flex items-center gap-5 border-t border-white/[0.07] pt-6 text-[11px] text-slate-500">
+                <div className="relative flex items-center gap-5 border-t border-white/[0.07] pt-6 text-[11px] text-slate-400">
                   <span className="inline-flex items-center gap-2">
                     <ShieldCheck size={13} className="text-sky-500/80" /> {t('auth.shell.secure')}
                   </span>
@@ -142,7 +142,7 @@ export function AuthShell({ children, headline, subtitle }: Props) {
           </div>
         </main>
 
-        <footer className="flex flex-col items-center justify-between gap-2 pb-1 text-[11px] text-slate-600 sm:flex-row">
+        <footer className="flex flex-col items-center justify-between gap-2 pb-1 text-[11px] text-slate-400 sm:flex-row">
           <span>{t('auth.shell.copyright')}</span>
           <span className="uppercase tracking-[0.22em]">{t('auth.shell.tagline')}</span>
         </footer>
@@ -174,7 +174,7 @@ export function AuthInput({ label, hint, ...props }: React.InputHTMLAttributes<H
       <input
         {...props}
         className={cn(
-          'w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-600',
+          'w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-400',
           'focus:border-sky-400/60 focus:bg-black/60 focus:ring-4 focus:ring-sky-500/10',
           props.className,
         )}
@@ -192,3 +192,4 @@ export function AuthNotice({ tone = 'error', children }: { tone?: 'error' | 'inf
   const role = tone === 'error' ? 'alert' : 'status'
   return <div role={role} aria-live={tone === 'error' ? 'assertive' : 'polite'} className={cn('rounded-xl border px-4 py-3 text-sm leading-relaxed', tones[tone])}>{children}</div>
 }
+

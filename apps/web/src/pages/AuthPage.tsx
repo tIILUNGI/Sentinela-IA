@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import { ArrowRight, Eye, EyeOff, Lock, Mail, User, Building2, ShieldCheck } from 'lucide-react'
 import { useAuth } from '@/lib/auth'
@@ -94,7 +94,7 @@ export default function AuthPage({ mode }: { mode: Mode }) {
               placeholder="name@organization.com"
               className="pl-10"
             />
-            <Mail size={15} className="pointer-events-none absolute bottom-[15px] left-3.5 text-slate-500" />
+            <Mail size={15} className="pointer-events-none absolute bottom-[15px] left-3.5 text-slate-400" />
           </div>
 
           <div className="relative">
@@ -113,15 +113,15 @@ export default function AuthPage({ mode }: { mode: Mode }) {
               required
               minLength={isSignup ? 8 : undefined}
               autoComplete={isSignup ? 'new-password' : 'current-password'}
-              placeholder="••••••••••"
+              placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
               className="pl-10 pr-11"
             />
-            <Lock size={15} className="pointer-events-none absolute bottom-[15px] left-3.5 text-slate-500" />
+            <Lock size={15} className="pointer-events-none absolute bottom-[15px] left-3.5 text-slate-400" />
             <button
               type="button"
               onClick={() => setShowPassword(v => !v)}
               aria-label={showPassword ? t('auth.hidePassword') : t('auth.showPassword')}
-              className="absolute bottom-[10px] right-2.5 rounded-md p-1.5 text-slate-500 transition hover:text-white"
+              className="absolute bottom-[10px] right-2.5 rounded-md p-1.5 text-slate-400 transition hover:text-white"
             >
               {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
             </button>
@@ -137,11 +137,11 @@ export default function AuthPage({ mode }: { mode: Mode }) {
                 placeholder={t('auth.register.orgPlaceholder')}
                 className="pl-10"
               />
-              <Building2 size={15} className="pointer-events-none absolute bottom-[15px] left-3.5 text-slate-500" />
+              <Building2 size={15} className="pointer-events-none absolute bottom-[15px] left-3.5 text-slate-400" />
             </div>
           )}
 
-          {isSignup && <p className="text-[11px] leading-relaxed text-slate-500">{t('auth.register.hint')}</p>}
+          {isSignup && <p className="text-[11px] leading-relaxed text-slate-400">{t('auth.register.hint')}</p>}
 
           {error && <AuthNotice>{error}</AuthNotice>}
 
@@ -160,7 +160,7 @@ export default function AuthPage({ mode }: { mode: Mode }) {
         </form>
 
         {!isSignup && (
-          <div className="mt-5 flex flex-col items-center gap-2 text-center text-xs text-slate-500">
+          <div className="mt-5 flex flex-col items-center gap-2 text-center text-xs text-slate-400">
             <span>
               {t('auth.login.noAccount')}{' '}
               <Link to="/register" className="font-medium text-sky-400 hover:text-sky-300">
@@ -174,7 +174,7 @@ export default function AuthPage({ mode }: { mode: Mode }) {
                 setPassword('SentinelaDemo2026!')
                 setError('')
               }}
-              className="text-[11px] text-slate-600 underline decoration-slate-700 underline-offset-4 transition hover:text-slate-400"
+              className="text-[11px] text-slate-400 underline decoration-slate-700 underline-offset-4 transition hover:text-slate-400"
             >
               Demo
             </button>
@@ -182,7 +182,7 @@ export default function AuthPage({ mode }: { mode: Mode }) {
         )}
 
         {isSignup && (
-          <div className="mt-5 text-center text-xs text-slate-500">
+          <div className="mt-5 text-center text-xs text-slate-400">
             {t('auth.register.hasAccount')}{' '}
             <Link to="/login" className="font-medium text-sky-400 hover:text-sky-300">
               {t('auth.register.signIn')}
@@ -190,7 +190,7 @@ export default function AuthPage({ mode }: { mode: Mode }) {
           </div>
         )}
 
-        <div className="mt-6 flex items-center gap-3 text-[10px] uppercase tracking-[0.18em] text-slate-600">
+        <div className="mt-6 flex items-center gap-3 text-[10px] uppercase tracking-[0.18em] text-slate-400">
           <span className="h-px flex-1 bg-white/[0.08]" />
           <span className="inline-flex items-center gap-1.5">
             <ShieldCheck size={11} /> {t('auth.secure')}
@@ -199,9 +199,10 @@ export default function AuthPage({ mode }: { mode: Mode }) {
         </div>
       </AuthCard>
 
-      <p className="mt-5 flex items-center justify-center gap-2 text-[11px] text-slate-600">
+      <p className="mt-5 flex items-center justify-center gap-2 text-[11px] text-slate-400">
         <User size={11} /> {t('auth.shell.roleNote')}
       </p>
     </AuthShell>
   )
 }
+

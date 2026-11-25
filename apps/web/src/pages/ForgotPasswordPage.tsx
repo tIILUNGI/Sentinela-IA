@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowLeft, ArrowRight, Check, Copy, Mail } from 'lucide-react'
 import { api } from '@/lib/api'
@@ -63,7 +63,7 @@ export default function ForgotPasswordPage() {
                 placeholder="name@organization.com"
                 className="pl-10"
               />
-              <Mail size={15} className="pointer-events-none absolute bottom-[15px] left-3.5 text-slate-500" />
+              <Mail size={15} className="pointer-events-none absolute bottom-[15px] left-3.5 text-slate-400" />
             </div>
 
             {error && <AuthNotice>{error}</AuthNotice>}
@@ -81,7 +81,7 @@ export default function ForgotPasswordPage() {
               )}
             </button>
 
-            <p className="text-[11px] leading-relaxed text-slate-500">{t('auth.forgot.privacy')}</p>
+            <p className="text-[11px] leading-relaxed text-slate-400">{t('auth.forgot.privacy')}</p>
           </form>
         )}
 
@@ -117,7 +117,7 @@ export default function ForgotPasswordPage() {
                 </Link>
               </div>
             ) : (
-              <p className="text-xs leading-relaxed text-slate-500">{t('auth.forgot.emailSent')}</p>
+              <p className="text-xs leading-relaxed text-slate-400">{t('auth.forgot.emailSent')}</p>
             )}
 
             <button
@@ -133,3 +133,4 @@ export default function ForgotPasswordPage() {
     </AuthShell>
   )
 }
+
