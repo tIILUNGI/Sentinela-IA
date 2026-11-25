@@ -33,6 +33,7 @@ Thumbs.db
 # Project
 uploads/
 storage/
+*.db
 *.log
 .alembic/
 
