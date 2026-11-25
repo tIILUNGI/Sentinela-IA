@@ -6,6 +6,7 @@ import {
 import {
   AlertTriangle, FileText, ShieldAlert, CheckCircle2, Activity, Lightbulb, Scale, Shield, Download, ArrowUpRight,
 } from 'lucide-react'
+import { useAuth } from '@/lib/auth'
 import { api } from '@/lib/api'
 import { useI18n } from '@/lib/i18n'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -42,7 +43,10 @@ async function downloadCsv(path: string, filename: string) {
 }
 
 export default function DashboardPage() {
+  const { user, memberships, orgId } = useAuth()
   const { t, tTerm } = useI18n()
+  const currentOrg = memberships.find(m => m.organization_id === orgId)
+  const roleLabel = user?.is_superuser ? t('common.superAdmin') : (currentOrg?.role || '')
   const { data, isLoading, error } = useQuery({
     queryKey: ['overview'],
     queryFn: async () => (await api.get('/analytics/overview')).data,
@@ -77,8 +81,8 @@ export default function DashboardPage() {
     <div className="space-y-6">
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-navy-900">{t('dashboard.title')}</h1>
-          <p className="text-sm text-muted">{t('dashboard.subtitle')}</p>
+          <h1 className="text-2xl font-bold text-navy-900">{t('common.workspace')}</h1>
+          <p className="text-sm text-muted">{currentOrg?.organization_name || t('common.noOrganization')} · {roleLabel}</p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <span className="text-xs font-medium text-muted mr-1">{t('dashboard.exports')}:</span>

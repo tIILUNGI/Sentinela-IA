@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
+import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import {
   LayoutDashboard, AlertTriangle, FileText, Shield, Scale, Lightbulb,
   CheckSquare, ScrollText, LogOut, Building2, UserCircle, Menu, X, ChevronRight,
@@ -14,6 +14,7 @@ export function AppLayout() {
   const { user, memberships, orgId, setOrgId, logout } = useAuth()
   const { t } = useI18n()
   const navigate = useNavigate()
+  const location = useLocation()
   const [mobileOpen, setMobileOpen] = useState(false)
   const currentOrg = memberships.find(m => m.organization_id === orgId)
   const roleLabel = user?.is_superuser ? t('common.superAdmin') : (currentOrg?.role || '')
@@ -25,15 +26,23 @@ export function AppLayout() {
     .join('')
 
   const nav = [
-    { to: '/app', label: t('nav.commandCenter'), icon: LayoutDashboard, end: true },
-    { to: '/app/incidents', label: t('nav.incidents'), icon: AlertTriangle },
-    { to: '/app/documents', label: t('nav.documents'), icon: FileText },
-    { to: '/app/evidence', label: t('nav.evidence'), icon: Shield },
-    { to: '/app/risks', label: t('nav.risks'), icon: Scale },
-    { to: '/app/recommendations', label: t('nav.recommendations'), icon: Lightbulb },
-    { to: '/app/tasks', label: t('nav.tasks'), icon: CheckSquare },
-    { to: '/app/audit', label: t('nav.audit'), icon: ScrollText },
+    { to: '/app', label: t('nav.commandCenter'), subtitle: t('dashboard.subtitle'), icon: LayoutDashboard, end: true },
+    { to: '/app/incidents', label: t('nav.incidents'), subtitle: t('incidents.subtitle'), icon: AlertTriangle },
+    { to: '/app/documents', label: t('nav.documents'), subtitle: t('documents.subtitle'), icon: FileText },
+    { to: '/app/evidence', label: t('nav.evidence'), subtitle: t('evidence.subtitle'), icon: Shield },
+    { to: '/app/risks', label: t('nav.risks'), subtitle: t('risks.subtitle'), icon: Scale },
+    { to: '/app/recommendations', label: t('nav.recommendations'), subtitle: t('recommendations.subtitle'), icon: Lightbulb },
+    { to: '/app/tasks', label: t('nav.tasks'), subtitle: t('tasks.subtitle'), icon: CheckSquare },
+    { to: '/app/audit', label: t('nav.audit'), subtitle: t('audit.subtitle'), icon: ScrollText },
   ]
+
+  const activeNav = nav.find(n => (n.end ? location.pathname === n.to : location.pathname.startsWith(n.to)))
+  const headerTitle = location.pathname.startsWith('/app/profile')
+    ? t('profile.title')
+    : (activeNav?.label || t('nav.commandCenter'))
+  const headerSubtitle = location.pathname.startsWith('/app/profile')
+    ? t('profile.subtitle')
+    : (activeNav?.subtitle || `${currentOrg?.organization_name || t('common.noOrganization')} · ${roleLabel}`)
 
   const handleSignOut = async () => {
     await logout()
@@ -140,8 +149,8 @@ export function AppLayout() {
         Skip to content
       </a>
 
-      {/* Desktop Sidebar */}
-      <aside className="hidden lg:flex w-64 shrink-0 flex-col border-r border-white/[0.08]">
+      {/* Static Desktop Sidebar */}
+      <aside className="hidden lg:flex lg:sticky lg:top-0 lg:h-screen w-64 shrink-0 flex-col border-r border-white/[0.08]">
         {sidebarContent}
       </aside>
 
@@ -169,10 +178,8 @@ export function AppLayout() {
               <Menu size={18} />
             </button>
             <div className="min-w-0">
-              <div className="text-sm font-semibold text-slate-900 truncate">{t('common.workspace')}</div>
-              <div className="text-xs text-muted truncate">
-                {currentOrg?.organization_name || t('common.noOrganization')} · {roleLabel}
-              </div>
+              <div className="text-sm font-semibold text-slate-900 truncate">{headerTitle}</div>
+              <div className="text-xs text-muted truncate">{headerSubtitle}</div>
             </div>
           </div>
 

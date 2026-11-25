@@ -252,7 +252,12 @@ function createInitialDB(): LocalDB {
 function loadDB(): LocalDB {
   try {
     const raw = localStorage.getItem(DB_KEY)
-    if (raw) return JSON.parse(raw) as LocalDB
+    if (raw) {
+      const parsed = JSON.parse(raw) as LocalDB
+      if (parsed && Array.isArray(parsed.users) && parsed.users.some(u => u.email === 'demo@sentinela.ai')) {
+        return parsed
+      }
+    }
   } catch {
     // Corrupted local DB resets cleanly to seeded state.
   }

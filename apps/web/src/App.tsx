@@ -2,13 +2,13 @@ import { Suspense, lazy } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { useAuth } from '@/lib/auth'
 import { AppLayout } from '@/components/layout/AppLayout'
+import LandingPage from '@/pages/LandingPage'
+import LoginPage from '@/pages/LoginPage'
+import DashboardPage from '@/pages/app/DashboardPage'
 
-const LandingPage = lazy(() => import('@/pages/LandingPage'))
-const LoginPage = lazy(() => import('@/pages/LoginPage'))
 const RegisterPage = lazy(() => import('@/pages/RegisterPage'))
 const ForgotPasswordPage = lazy(() => import('@/pages/ForgotPasswordPage'))
 const ResetPasswordPage = lazy(() => import('@/pages/ResetPasswordPage'))
-const DashboardPage = lazy(() => import('@/pages/app/DashboardPage'))
 const IncidentsPage = lazy(() => import('@/pages/app/IncidentsPage'))
 const DocumentsPage = lazy(() => import('@/pages/app/DocumentsPage'))
 const EvidencePage = lazy(() => import('@/pages/app/EvidencePage'))

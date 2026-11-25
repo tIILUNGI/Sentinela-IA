@@ -7,6 +7,14 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input, Textarea } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
 
+function cellTone(p: number, i: number): string {
+  const product = p * i
+  if (product >= 15) return 'bg-red-500/15 border-red-400/50 text-red-900 hover:bg-red-500/25'
+  if (product >= 10) return 'bg-orange-500/15 border-orange-400/50 text-orange-900 hover:bg-orange-500/25'
+  if (product >= 5) return 'bg-amber-500/15 border-amber-400/50 text-amber-900 hover:bg-amber-500/25'
+  return 'bg-emerald-500/15 border-emerald-400/50 text-emerald-900 hover:bg-emerald-500/25'
+}
+
 export default function RisksPage() {
   const qc = useQueryClient()
   const { t, tTerm, translateError } = useI18n()
@@ -34,6 +42,9 @@ export default function RisksPage() {
     ['evidence_quality', t('risks.evidenceQuality')],
   ] as const
 
+  const countAt = (p: number, i: number) =>
+    risks.filter((r: any) => Number(r.probability) === p && Number(r.impact) === i).length
+
   return (
     <div className="space-y-6">
       <div>
@@ -41,6 +52,57 @@ export default function RisksPage() {
         <p className="text-sm text-muted">{t('risks.subtitle')}</p>
       </div>
       {error && <div className="text-sm text-red-600 bg-red-50 border border-red-100 rounded-md p-3">{error}</div>}
+
+      {/* Interactive 5x5 Risk Matrix */}
+      <Card>
+        <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <CardTitle>5x5 Risk Matrix ({t('risks.probability')} x {t('risks.impact')})</CardTitle>
+          <div className="flex flex-wrap items-center gap-3 text-xs text-slate-600">
+            <span className="inline-flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-sm bg-emerald-500/40 border border-emerald-500" /> {tTerm('low')}</span>
+            <span className="inline-flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-sm bg-amber-500/40 border border-amber-500" /> {tTerm('moderate')}</span>
+            <span className="inline-flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-sm bg-orange-500/40 border border-orange-500" /> {tTerm('high')}</span>
+            <span className="inline-flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-sm bg-red-500/40 border border-red-500" /> {tTerm('critical')}</span>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="overflow-x-auto">
+            <div className="min-w-[440px]">
+              <div className="grid grid-cols-[64px_repeat(5,minmax(0,1fr))] gap-1.5 items-center">
+                {[5, 4, 3, 2, 1].map(p => (
+                  <div key={p} className="contents">
+                    <div className="text-xs font-semibold text-slate-600 text-right pr-2">
+                      P{p}
+                    </div>
+                    {[1, 2, 3, 4, 5].map(i => {
+                      const count = countAt(p, i)
+                      const selected = form.probability === p && form.impact === i
+                      return (
+                        <button
+                          key={`${p}-${i}`}
+                          type="button"
+                          onClick={() => setForm({ ...form, probability: p, impact: i })}
+                          aria-label={`Probability ${p}, Impact ${i}, ${count} assessments`}
+                          className={`h-14 rounded-lg border text-xs font-semibold transition flex flex-col items-center justify-center ${cellTone(p, i)} ${selected ? 'ring-2 ring-brand-600 ring-offset-1' : ''}`}
+                        >
+                          <span className="text-sm font-bold">{count > 0 ? count : '·'}</span>
+                          <span className="text-[10px] opacity-70">{p}x{i}={p * i}</span>
+                        </button>
+                      )
+                    })}
+                  </div>
+                ))}
+                <div />
+                {[1, 2, 3, 4, 5].map(i => (
+                  <div key={i} className="text-center text-xs font-semibold text-slate-600 pt-1">
+                    I{i}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
       <div className="grid xl:grid-cols-3 gap-6">
         <Card>
           <CardHeader><CardTitle>{t('risks.assess')}</CardTitle></CardHeader>
