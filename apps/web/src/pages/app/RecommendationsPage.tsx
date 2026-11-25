@@ -42,10 +42,6 @@ export default function RecommendationsPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-navy-900">{t('recommendations.title')}</h1>
-        <p className="text-sm text-muted">{t('recommendations.subtitle')}</p>
-      </div>
       {error && <div className="text-sm text-red-600 bg-red-50 border border-red-100 rounded-md p-3">{error}</div>}
       <div className="grid xl:grid-cols-3 gap-6">
         <Card>

@@ -24,10 +24,6 @@ export default function AuditPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-navy-900">{t('audit.title')}</h1>
-        <p className="text-sm text-muted">{t('audit.subtitle')}</p>
-      </div>
       <Card>
         <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <CardTitle>{t('audit.logs')}</CardTitle>

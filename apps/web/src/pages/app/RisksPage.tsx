@@ -47,10 +47,6 @@ export default function RisksPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-navy-900">{t('risks.title')}</h1>
-        <p className="text-sm text-muted">{t('risks.subtitle')}</p>
-      </div>
       {error && <div className="text-sm text-red-600 bg-red-50 border border-red-100 rounded-md p-3">{error}</div>}
 
       {/* Interactive 5x5 Risk Matrix */}

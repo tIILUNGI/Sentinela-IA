@@ -6,7 +6,6 @@ import {
 import {
   AlertTriangle, FileText, ShieldAlert, CheckCircle2, Activity, Lightbulb, Scale, Shield, Download, ArrowUpRight,
 } from 'lucide-react'
-import { useAuth } from '@/lib/auth'
 import { api } from '@/lib/api'
 import { useI18n } from '@/lib/i18n'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -43,10 +42,7 @@ async function downloadCsv(path: string, filename: string) {
 }
 
 export default function DashboardPage() {
-  const { user, memberships, orgId } = useAuth()
   const { t, tTerm } = useI18n()
-  const currentOrg = memberships.find(m => m.organization_id === orgId)
-  const roleLabel = user?.is_superuser ? t('common.superAdmin') : (currentOrg?.role || '')
   const { data, isLoading, error } = useQuery({
     queryKey: ['overview'],
     queryFn: async () => (await api.get('/analytics/overview')).data,
@@ -79,23 +75,17 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-navy-900">{t('common.workspace')}</h1>
-          <p className="text-sm text-muted">{currentOrg?.organization_name || t('common.noOrganization')} · {roleLabel}</p>
-        </div>
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="text-xs font-medium text-muted mr-1">{t('dashboard.exports')}:</span>
-          <Button size="sm" variant="secondary" onClick={() => downloadCsv('/reports/incidents.csv', 'incidents.csv')}>
-            <Download size={14} className="mr-1.5" /> {t('dashboard.exportIncidents')}
-          </Button>
-          <Button size="sm" variant="secondary" onClick={() => downloadCsv('/reports/risks.csv', 'risks.csv')}>
-            <Download size={14} className="mr-1.5" /> {t('dashboard.exportRisks')}
-          </Button>
-          <Button size="sm" variant="secondary" onClick={() => downloadCsv('/reports/recommendations.csv', 'recommendations.csv')}>
-            <Download size={14} className="mr-1.5" /> {t('dashboard.exportRecommendations')}
-          </Button>
-        </div>
+      <div className="flex flex-wrap items-center justify-end gap-2">
+        <span className="text-xs font-medium text-muted mr-1">{t('dashboard.exports')}:</span>
+        <Button size="sm" variant="secondary" onClick={() => downloadCsv('/reports/incidents.csv', 'incidents.csv')}>
+          <Download size={14} className="mr-1.5" /> {t('dashboard.exportIncidents')}
+        </Button>
+        <Button size="sm" variant="secondary" onClick={() => downloadCsv('/reports/risks.csv', 'risks.csv')}>
+          <Download size={14} className="mr-1.5" /> {t('dashboard.exportRisks')}
+        </Button>
+        <Button size="sm" variant="secondary" onClick={() => downloadCsv('/reports/recommendations.csv', 'recommendations.csv')}>
+          <Download size={14} className="mr-1.5" /> {t('dashboard.exportRecommendations')}
+        </Button>
       </div>
 
       <div className="grid sm:grid-cols-2 xl:grid-cols-4 gap-4">

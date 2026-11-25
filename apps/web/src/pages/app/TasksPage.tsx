@@ -17,7 +17,6 @@ export default function TasksPage() {
   const update = useMutation({ mutationFn: async ({id,status}:{id:string;status:string}) => (await api.patch(`/tasks/${id}`, { status })).data, onSuccess: () => qc.invalidateQueries({queryKey:['tasks']}), onError: (e:any)=>setError(translateError(e?.response?.data?.detail)) })
   return (
     <div className="space-y-6">
-      <div><h1 className="text-2xl font-bold text-navy-900">{t('tasks.title')}</h1><p className="text-sm text-muted">{t('tasks.subtitle')}</p></div>
       {error && <div className="text-sm text-red-600 bg-red-50 border border-red-100 rounded-md p-3">{error}</div>}
       <div className="grid xl:grid-cols-3 gap-6">
         <Card><CardHeader><CardTitle>{t('tasks.create')}</CardTitle></CardHeader><CardContent className="space-y-3">
