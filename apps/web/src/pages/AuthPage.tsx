@@ -121,7 +121,7 @@ export default function AuthPage({ mode }: { mode: Mode }) {
               type="button"
               onClick={() => setShowPassword(v => !v)}
               aria-label={showPassword ? t('auth.hidePassword') : t('auth.showPassword')}
-              className="absolute bottom-[11px] right-3 rounded-md p-1 text-slate-500 transition hover:text-white"
+              className="absolute bottom-[10px] right-2.5 rounded-md p-1.5 text-slate-500 transition hover:text-white"
             >
               {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
             </button>

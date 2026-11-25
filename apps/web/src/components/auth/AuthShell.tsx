@@ -115,9 +115,10 @@ export function AuthShell({ children, headline, subtitle }: Props) {
                   </p>
                   <Link
                     to="/"
+                    aria-label={t('auth.shell.learnMore')}
                     className="group mt-8 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-sky-500/25 via-blue-600/25 to-slate-700/30 px-5 py-2.5 text-sm font-medium text-white ring-1 ring-white/15 transition hover:from-sky-500/40 hover:via-blue-600/40"
                   >
-                    {t('auth.shell.learnMore')}
+                    <span>{t('auth.shell.learnMore')}</span>
                     <ArrowRight size={15} className="transition group-hover:translate-x-0.5" />
                   </Link>
                 </div>
