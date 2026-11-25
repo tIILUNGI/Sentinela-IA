@@ -161,31 +161,24 @@ export default function AuthPage({ mode }: { mode: Mode }) {
         </form>
 
         {!isSignup && (
-          <div className="mt-5 flex flex-col gap-3 text-center text-xs text-slate-500">
-            <button
-              type="button"
-              onClick={async () => {
-                setError('')
-                setLoading(true)
-                try {
-                  await login('demo@sentinela.ai', 'SentinelaDemo2026!')
-                  nav('/app')
-                } catch (err: any) {
-                  setError(translateError(err?.response?.data?.detail) || t('common.error'))
-                } finally {
-                  setLoading(false)
-                }
-              }}
-              className="w-full rounded-full border border-sky-400/25 bg-sky-500/10 px-4 py-2 text-xs font-medium text-sky-300 transition hover:bg-sky-500/20"
-            >
-              Demo: demo@sentinela.ai
-            </button>
+          <div className="mt-5 flex flex-col items-center gap-2 text-center text-xs text-slate-500">
             <span>
               {t('auth.login.noAccount')}{' '}
               <Link to="/register" className="font-medium text-sky-400 hover:text-sky-300">
                 {t('auth.login.create')}
               </Link>
             </span>
+            <button
+              type="button"
+              onClick={() => {
+                setEmail('demo@sentinela.ai')
+                setPassword('SentinelaDemo2026!')
+                setError('')
+              }}
+              className="text-[11px] text-slate-600 underline decoration-slate-700 underline-offset-4 transition hover:text-slate-400"
+            >
+              Demo
+            </button>
           </div>
         )}
 
