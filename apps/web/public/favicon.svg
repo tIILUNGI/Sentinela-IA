@@ -1,0 +1,50 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="96" height="96">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="96" y2="96" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0b1220"/>
+      <stop offset="1" stop-color="#04070c"/>
+    </linearGradient>
+    <linearGradient id="metal" x1="20" y1="8" x2="78" y2="90" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="0.35" stop-color="#dfe7f1"/>
+      <stop offset="0.62" stop-color="#9fb0c6"/>
+      <stop offset="0.82" stop-color="#f2f6fb"/>
+      <stop offset="1" stop-color="#8c9bb0"/>
+    </linearGradient>
+    <linearGradient id="metalDeep" x1="24" y1="14" x2="72" y2="84" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#16233b"/>
+      <stop offset="0.55" stop-color="#0a1220"/>
+      <stop offset="1" stop-color="#050a12"/>
+    </linearGradient>
+    <linearGradient id="blue" x1="10" y1="70" x2="88" y2="24" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0aa6ff"/>
+      <stop offset="0.5" stop-color="#3fd2ff"/>
+      <stop offset="1" stop-color="#1d63ed"/>
+    </linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="2.4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="blueGlow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="3.2" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="96" height="96" rx="22" fill="url(#bg)"/>
+  <g transform="translate(10.6 10.6) scale(0.78)">
+    <path d="M48 5.5 83.5 19v34.4c0 18.3-15.1 30.9-35.5 38.6C27.6 84.3 12.5 71.7 12.5 53.4V19L48 5.5Z" fill="url(#metalDeep)" stroke="url(#metal)" stroke-width="2.6" stroke-linejoin="round"/>
+    <path d="M48 12.6 77.2 23.7v29.4c0 15.3-12.4 26.2-29.2 33-16.8-6.8-29.2-17.7-29.2-33V23.7L48 12.6Z" fill="none" stroke="#dbe6f5" stroke-opacity="0.16" stroke-width="1.4"/>
+    <path d="M63 33.5H43.5a8.7 8.7 0 0 0 0 17.4h11a8.7 8.7 0 0 1 0 17.4H31.5" stroke="url(#metal)" stroke-width="8.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)"/>
+    <path d="M60 66.5 61.5 70.5 65.5 72 61.5 73.5 60 77.5 58.5 73.5 54.5 72 58.5 70.5 60 66.5Z" fill="#bfe9ff" opacity="0.95" filter="url(#glow)"/>
+    <g transform="rotate(-26 48 48)">
+      <ellipse fill="none" cx="48" cy="48" rx="44.5" ry="14.5" stroke="url(#blue)" stroke-opacity="0.55" stroke-width="5" filter="url(#blueGlow)"/>
+      <ellipse fill="none" cx="48" cy="48" rx="44.5" ry="14.5" stroke="url(#blue)" stroke-width="1.9"/>
+    </g>
+    <g filter="url(#blueGlow)">
+      <circle cx="81.5" cy="26" r="5.4" fill="url(#blue)"/>
+      <circle cx="81.5" cy="26" r="2.1" fill="#eaf9ff"/>
+    </g>
+  </g>
+</svg>
+
+
