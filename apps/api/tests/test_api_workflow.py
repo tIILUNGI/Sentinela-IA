@@ -13,7 +13,16 @@ from fastapi import HTTPException  # noqa: E402
 from app.api.deps import get_current_org, get_current_user, has_permission  # noqa: E402
 from app.api.v1.endpoints.analytics import overview  # noqa: E402
 from app.api.v1.endpoints.audit import list_audit_logs  # noqa: E402
-from app.api.v1.endpoints.auth import change_password, login, me, refresh, register, update_me  # noqa: E402
+from app.api.v1.endpoints.auth import (  # noqa: E402
+    change_password,
+    forgot_password,
+    login,
+    me,
+    refresh,
+    register,
+    reset_password,
+    update_me,
+)
 from app.api.v1.endpoints.evidence import correlate_evidence, create_evidence  # noqa: E402
 from app.api.v1.endpoints.incidents import create_incident, list_incidents, update_incident  # noqa: E402
 from app.api.v1.endpoints.recommendations import approve_recommendation, create_recommendation  # noqa: E402
@@ -26,9 +35,11 @@ from app.db.session import SessionLocal, engine  # noqa: E402
 from app.main import app, seed_roles  # noqa: E402
 from app.schemas.auth import (  # noqa: E402
     ChangePasswordRequest,
+    ForgotPasswordRequest,
     LoginRequest,
     RefreshRequest,
     RegisterRequest,
+    ResetPasswordRequest,
     UpdateProfileRequest,
 )
 from app.schemas.evidence import EvidenceCreate  # noqa: E402
@@ -231,3 +242,33 @@ class SentinelaWorkflowTest(unittest.TestCase):
             actions = {l.action for l in logs}
             self.assertIn("incident.create", actions)
             self.assertIn("recommendation.approve", actions)
+
+    def test_04_password_reset_flow(self):
+        with SessionLocal() as db:
+            # Unknown email must not leak existence and must not error
+            r = forgot_password(ForgotPasswordRequest(email="nobody@example.com"), db=db)
+            self.assertIn("reset", r.message.lower())
+            self.assertIsNone(r.reset_url)
+
+            # Known user gets a reset link in non-production/test without SMTP
+            r2 = forgot_password(ForgotPasswordRequest(email="alice@sentinela-ops.com"), db=db)
+            self.assertTrue(r2.reset_url)
+            token = r2.reset_url.split("token=")[-1]
+
+            # Wrong token rejected
+            with self.assertRaises(HTTPException):
+                reset_password(ResetPasswordRequest(token="bad-token-value-1234567890", new_password="AnotherStrong123!"), db=db)
+
+            # Valid token resets password
+            ok = reset_password(ResetPasswordRequest(token=token, new_password="ResetStrong123!"), db=db)
+            self.assertIn("Password updated", ok.message)
+
+            # Token is single-use
+            with self.assertRaises(HTTPException):
+                reset_password(ResetPasswordRequest(token=token, new_password="AgainStrong123!"), db=db)
+
+            # Old password fails, new works
+            with self.assertRaises(HTTPException):
+                login(LoginRequest(email="alice@sentinela-ops.com", password="NewStrongPassword456!"), db=db)
+            tok = login(LoginRequest(email="alice@sentinela-ops.com", password="ResetStrong123!"), db=db)
+            self.assertTrue(tok.access_token)

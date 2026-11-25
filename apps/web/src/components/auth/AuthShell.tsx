@@ -189,5 +189,6 @@ export function AuthNotice({ tone = 'error', children }: { tone?: 'error' | 'inf
     info: 'border-sky-500/25 bg-sky-500/10 text-sky-100',
     success: 'border-emerald-500/25 bg-emerald-500/10 text-emerald-100',
   }
-  return <div className={cn('rounded-xl border px-4 py-3 text-sm leading-relaxed', tones[tone])}>{children}</div>
+  const role = tone === 'error' ? 'alert' : 'status'
+  return <div role={role} aria-live={tone === 'error' ? 'assertive' : 'polite'} className={cn('rounded-xl border px-4 py-3 text-sm leading-relaxed', tones[tone])}>{children}</div>
 }

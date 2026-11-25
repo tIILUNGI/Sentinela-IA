@@ -52,7 +52,7 @@ export function AppLayout() {
   const sidebarContent = (
     <div className="flex h-full flex-col bg-[#050607] text-white">
       <div className="flex items-center justify-between px-5 py-5 border-b border-white/[0.08]">
-        <Link to="/app" onClick={() => setMobileOpen(false)} aria-label="SENTINELA AI Command Center">
+        <Link to="/app" onClick={() => setMobileOpen(false)} aria-label="SENTINELA AI">
           <Logo markSize={30} size="sm" />
         </Link>
         <button

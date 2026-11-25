@@ -4,6 +4,22 @@ import { handleLocalRequest } from './localEngine'
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1'
 const STANDALONE_MODE = import.meta.env.VITE_STANDALONE_MODE === 'true'
 
+/** When the frontend is deployed on a public origin but API_URL is local, avoid noisy
+ *  CORS/ERR_FAILED console errors by going straight to the local fallback engine. */
+function isLocalApiUrl() {
+  try {
+    const u = new URL(API_URL)
+    return ['localhost', '127.0.0.1', '0.0.0.0'].includes(u.hostname)
+  } catch {
+    return true
+  }
+}
+function isRemoteOrigin() {
+  if (typeof window === 'undefined') return false
+  return !['localhost', '127.0.0.1', '0.0.0.0'].includes(window.location.hostname)
+}
+const FORCE_LOCAL = STANDALONE_MODE || (isLocalApiUrl() && isRemoteOrigin())
+
 export const api = axios.create({
   baseURL: API_URL,
 })
@@ -15,7 +31,8 @@ api.interceptors.request.use((config) => {
   if (token) config.headers.Authorization = `Bearer ${token}`
   if (orgId) config.headers['X-Organization-ID'] = orgId
   config.headers['Accept-Language'] = locale
-  if (STANDALONE_MODE || (token && token.startsWith('local:'))) {
+  // Standalone/deployed-without-backend: handle locally to avoid CORS console noise.
+  if (FORCE_LOCAL || (token && token.startsWith('local:'))) {
     config.adapter = () => handleLocalRequest(config)
   }
   return config
@@ -51,7 +68,7 @@ api.interceptors.response.use(
     const original = error.config as (typeof error.config & { _retry?: boolean; _localFallback?: boolean }) | undefined
 
     // Automatic local persistence fallback when deployed frontend-only (e.g. Vercel without backend).
-    if (!error.response && original && !original._localFallback) {
+    if (!error.response && original && !original._localFallback && !FORCE_LOCAL) {
       original._localFallback = true
       return handleLocalRequest(original)
     }

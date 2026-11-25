@@ -5,6 +5,12 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from sqlalchemy import text
 from starlette.exceptions import HTTPException as StarletteHTTPException
+from starlette.middleware.base import BaseHTTPMiddleware
+from starlette.requests import Request as StarletteRequest
+from starlette.responses import Response as StarletteResponse
+
+import time
+from collections import defaultdict, deque
 
 from app.core.config import get_settings
 from app.core.localization import localize_detail
@@ -103,6 +109,43 @@ async def localized_http_exception_handler(request: Request, exc: StarletteHTTPE
         headers=getattr(exc, "headers", None),
     )
 
+# --- Security headers ---
+class SecurityHeadersMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: StarletteRequest, call_next):
+        response: StarletteResponse = await call_next(request)
+        response.headers.setdefault("X-Content-Type-Options", "nosniff")
+        response.headers.setdefault("X-Frame-Options", "DENY")
+        response.headers.setdefault("Referrer-Policy", "strict-origin-when-cross-origin")
+        response.headers.setdefault("Permissions-Policy", "camera=(), microphone=(), geolocation=(), payment=()")
+        # HSTS only meaningful over HTTPS; set harmlessly otherwise.
+        if request.url.scheme == "https":
+            response.headers.setdefault("Strict-Transport-Security", "max-age=31536000; includeSubDomains")
+        return response
+
+
+# --- Simple in-memory rate limit for auth endpoints (brute-force mitigation) ---
+_AUTH_RATE: dict[str, deque[float]] = defaultdict(deque)
+_AUTH_RATE_LIMIT = 30  # requests
+_AUTH_RATE_WINDOW = 60  # seconds
+
+
+class AuthRateLimitMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: StarletteRequest, call_next):
+        path = request.url.path or ""
+        if request.method == "POST" and "/auth/" in path and not path.endswith("/refresh"):
+            ip = (request.client.host if request.client else "unknown") or "unknown"
+            now = time.time()
+            q = _AUTH_RATE[ip]
+            while q and now - q[0] > _AUTH_RATE_WINDOW:
+                q.popleft()
+            if len(q) >= _AUTH_RATE_LIMIT:
+                return JSONResponse(status_code=429, content={"detail": "Too many requests. Please try again later."})
+            q.append(now)
+        return await call_next(request)
+
+
+app.add_middleware(SecurityHeadersMiddleware)
+app.add_middleware(AuthRateLimitMiddleware)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.cors_origins_list,
