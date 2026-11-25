@@ -32,7 +32,7 @@ export default function AuthPage({ mode }: { mode: Mode }) {
     try {
       if (isSignup) await register(name, email, password, org.trim() || undefined)
       else await login(email, password)
-      nav('/app')
+      // Navigation is handled by the declarative redirect above once user state is set.
     } catch (err: any) {
       setError(translateError(err?.response?.data?.detail) || t('common.error'))
     } finally {
